@@ -1,23 +1,15 @@
+// Can't use ES6 imports without some work.
 const path = require('path');
 var webpack = require("webpack");
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const brain = require("./src/brain_banner_ascii.js");
 
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/validate_csv.js',
   output: {
-    filename: 'bundle.js',
+    filename: 'micca.js',
     path: path.resolve(__dirname, 'dist'),
-    library: 'bndl',
+    library: 'micca',
   },
-  module: {
-    rules: [
-      {
-        test: /\.css/,
-        use: ['style-loader', 'css-loader']
-      }
-    ]
-  },
+  module: {},
   plugins: [
     new webpack.ProvidePlugin({
         $: "jquery",
@@ -25,10 +17,6 @@ module.exports = {
         "window.jQuery": "jquery",
         jquery: "jquery",
         d3: 'd3'
-    }),
-    new HtmlWebpackPlugin({
-      template: 'src/index.html',
-      banner: brain.content
     })
   ]
 };
