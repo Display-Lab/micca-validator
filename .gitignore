@@ -1,3 +1,5 @@
+package-lock.json
+
 # Build artifacts
 dist/*
 
@@ -7,6 +9,7 @@ jspm_packages/
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
+.vscode/*
 
 # dotenv environment variables file
 .env
@@ -31,3 +34,7 @@ pids
 *.pid
 *.seed
 *.pid.lock
+
+# Scratch files
+scratch.js
+ref/*
