@@ -1,6 +1,7 @@
 //var assert = require('assert');
 import {expect} from 'chai';
 import {csvParse} from 'd3-dsv';
+import * as CONST from '../src/consts.js';
 import * as bdl from '../src/validate_csv.js'
 import * as fs from 'fs';
 import goodCsvRaw from './fixtures/good_data.csv'
@@ -18,6 +19,12 @@ function readFile(path){
   }
 }
 
+var goodDf, badDf;
+before("Setup data frames.", function(){
+  goodDf = csvParse(goodCsvRaw.toLowerCase()); 
+  badDf = csvParse(badCsvRaw.toLowerCase()); 
+})
+
 // Helper function to remove a value from an array.
 function removeFromArray(arr,val){
   let idx = arr.indexOf(val);
@@ -25,11 +32,6 @@ function removeFromArray(arr,val){
   return(arr);
 }
 
-var goodDf, badDf;
-before("Setup data frames.", function(){
-  goodDf = csvParse(goodCsvRaw.toLowerCase()); 
-  badDf = csvParse(badCsvRaw.toLowerCase()); 
-})
 
 // Checking the testing framework behaves as expected.
 describe('testing framework', function(){
@@ -72,71 +74,71 @@ describe('validateFile()', function(){
 
 describe('verifyHeader', function(){
   it('indicates true when all headers are present in expected order', function(){
-    expect(bdl.verifyHeader(bdl.EXPECT_HEADER,bdl.EXPECT_HEADER)).to.equal(true);
+    expect(bdl.verifyHeader(CONST.EXPECT_HEADER,CONST.EXPECT_HEADER)).to.equal(true);
   });
 
   it('indicates false when colnames are out of order.', function(){
-    let misordered = [...bdl.EXPECT_HEADER.slice(6), ...bdl.EXPECT_HEADER.slice(0,6)];
-    expect(misordered.length).to.equal(bdl.EXPECT_HEADER.length);
-    expect(bdl.verifyHeader(misordered,bdl.EXPECT_HEADER)).to.equal(false);
+    let misordered = [...CONST.EXPECT_HEADER.slice(6), ...CONST.EXPECT_HEADER.slice(0,6)];
+    expect(misordered.length).to.equal(CONST.EXPECT_HEADER.length);
+    expect(bdl.verifyHeader(misordered,CONST.EXPECT_HEADER)).to.equal(false);
   });
 
   it('indicates false when colnames are missing.', function(){
-    let missingLast = bdl.EXPECT_HEADER.slice(1,5);
-    expect(bdl.verifyHeader(missingLast,bdl.EXPECT_HEADER)).to.equal(false);
+    let missingLast = CONST.EXPECT_HEADER.slice(1,5);
+    expect(bdl.verifyHeader(missingLast,CONST.EXPECT_HEADER)).to.equal(false);
   });
 
   it('indicates false when colnames are wrong.', function(){
-    let wrongName = [...bdl.EXPECT_HEADER];
+    let wrongName = [...CONST.EXPECT_HEADER];
     wrongName[1] = "badname";
-    expect(bdl.verifyHeader(wrongName,bdl.EXPECT_HEADER)).to.equal(false);
+    expect(bdl.verifyHeader(wrongName,CONST.EXPECT_HEADER)).to.equal(false);
   });
 
   it('indicates false when extra colnames.', function(){
-    let hasExtra = [...bdl.EXPECT_HEADER];
+    let hasExtra = [...CONST.EXPECT_HEADER];
     hasExtra.push("extra");
-    expect(bdl.verifyHeader(hasExtra,bdl.EXPECT_HEADER)).to.equal(false);
+    expect(bdl.verifyHeader(hasExtra,CONST.EXPECT_HEADER)).to.equal(false);
   });
 
   it('indicates false when extra blank columns.', function(){
-    let extraBlankCols = [...bdl.EXPECT_HEADER];
+    let extraBlankCols = [...CONST.EXPECT_HEADER];
     extraBlankCols.push("");
 
-    let result = bdl.verifyHeader(extraBlankCols,bdl.EXPECT_HEADER);
+    let result = bdl.verifyHeader(extraBlankCols,CONST.EXPECT_HEADER);
     expect(result).to.equal(false);
   });
 });
 
 describe('diffCols', function(){
   it('returns empty when no differnces.', function(){
-    let result = bdl.diffCols(bdl.EXPECT_HEADER,bdl.EXPECT_HEADER);
+    let result = bdl.diffCols(CONST.EXPECT_HEADER,CONST.EXPECT_HEADER);
     expect(result).to.be.empty;
   });
 
   it('points out bad name of column.', function(){
-    let wrongName = [...bdl.EXPECT_HEADER];
+    let wrongName = [...CONST.EXPECT_HEADER];
     wrongName[1] = "badname";
 
-    let result = bdl.diffCols(wrongName,bdl.EXPECT_HEADER);
+    let result = bdl.diffCols(wrongName,CONST.EXPECT_HEADER);
     expect(result).to.have.lengthOf(1);
     expect(result).to.include("badname");
   });
 
   it('points out name of extra column.', function(){
-    let hasExtra = [...bdl.EXPECT_HEADER];
+    let hasExtra = [...CONST.EXPECT_HEADER];
     hasExtra.push("extra");
 
-    let result = bdl.diffCols(hasExtra,bdl.EXPECT_HEADER);
+    let result = bdl.diffCols(hasExtra,CONST.EXPECT_HEADER);
     expect(result).to.have.lengthOf(1);
     expect(result).to.include("extra");
   });
 
   it('points out name of extra blank columns.', function(){
-    let extraBlankCols = [...bdl.EXPECT_HEADER];
+    let extraBlankCols = [...CONST.EXPECT_HEADER];
     extraBlankCols.push("");
     extraBlankCols.push("");
 
-    let result = bdl.diffCols(extraBlankCols,bdl.EXPECT_HEADER);
+    let result = bdl.diffCols(extraBlankCols,CONST.EXPECT_HEADER);
     expect(result).to.have.lengthOf(1);
     expect(result).to.include("");
   });
@@ -144,19 +146,19 @@ describe('diffCols', function(){
 
 describe('diffCols', function(){
   it('points out name of missing column.', function(){
-    let missingColName = [...bdl.EXPECT_HEADER];
-    removeFromArray(missingColName, bdl.EXPECT_HEADER[2]);
+    let missingColName = [...CONST.EXPECT_HEADER];
+    removeFromArray(missingColName, CONST.EXPECT_HEADER[2]);
 
-    let result = bdl.diffHeader(missingColName,bdl.EXPECT_HEADER);
+    let result = bdl.diffHeader(missingColName,CONST.EXPECT_HEADER);
     expect(result).to.have.lengthOf(1);
-    expect(result).to.include(bdl.EXPECT_HEADER[2]);
+    expect(result).to.include(CONST.EXPECT_HEADER[2]);
   });
 
   it('does not report extra column.', function(){
-    let hasExtra = [...bdl.EXPECT_HEADER];
+    let hasExtra = [...CONST.EXPECT_HEADER];
     hasExtra.push("extra");
 
-    let result = bdl.diffHeader(hasExtra,bdl.EXPECT_HEADER);
+    let result = bdl.diffHeader(hasExtra,CONST.EXPECT_HEADER);
     expect(result).to.be.empty;
   });
 });
