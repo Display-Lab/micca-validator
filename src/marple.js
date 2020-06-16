@@ -54,7 +54,7 @@ export default class Marple {
     return(colsInError);
   }
 
-  static problemReport(df){
+  static allRowProblems(df){
     let rowProblems = [];
     let report = {};
     for(let i=0; i<df.length; i++){

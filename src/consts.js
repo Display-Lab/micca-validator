@@ -13,6 +13,7 @@ export const VALID_VALS = {
   peripartum_care: ["yes","no","unknown"]
 };
 
+
 export const COUNSELING = ["yes","no","unknown"];
 export const CONTRACEPTION_CHOICE = ["immediate pp iud", "immediate pp nexplanon", "pptl", "other", "none", "unknown"];
 export const IMMEDIATE_METHOD = ["immediate pp iud", "immediate pp nexplanon", "pptl", "other", "none", "unknown"];

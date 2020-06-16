@@ -40,19 +40,6 @@ describe('testing framework', function(){
   });
 });
 
-describe('parseToDf', function(){
-  //TODO Figure out how to test if all keys and values are lowercase
-  it.skip('converts entire contents to lower case', function(){
-    let csvData="Foo,Bar,Baz\n10,Yes,Unknown\n12,No,PPTL\n";
-    let result = bdl.parseToDf(csvData);
-  });
-
-  it('throws error on xlsx data', function(){
-    let binding = bdl.parseToDf.bind(this, xlsxRaw);
-    expect(binding).to.throw("Excel");
-  });
-});
-
 // Testing the validator.
 describe('validateFile()', function(){
   it('accepts raw good data', function(){
@@ -109,44 +96,6 @@ describe('verifyHeader', function(){
   });
 });
 
-describe('validateDate', function(){
-  it('accepts yyyy-MM-dd dates', function(){
-    let result = bdl.validateDate("2020-11-22");
-    expect(result).to.be.true;
-  });
-
-  it('rejects MM/dd/yyyy dates', function(){
-    let result = bdl.validateDate("11/22/2020");
-    expect(result).to.be.false;
-  });
-
-  it('rejects out of bounds dates', function(){
-    let result = bdl.validateDate("2020-22-22");
-    expect(result).to.be.false;
-  });
-});
-
-describe('validateDateOrUnknown', function(){
-  it('accepts unknown', function(){
-    let result = bdl.validateDateOrUnknown("unknown");
-    expect(result).to.be.true;
-  });
-
-  it('accepts yyyy-MM-dd dates', function(){
-    let result = bdl.validateDateOrUnknown("2020-11-22");
-    expect(result).to.be.true;
-  });
-
-  it('rejects MM/dd/yyyy dates', function(){
-    let result = bdl.validateDateOrUnknown("11/22/2020");
-    expect(result).to.be.false;
-  });
-
-  it('rejects out of bounds dates', function(){
-    let result = bdl.validateDateOrUnknown("2020-22-22");
-    expect(result).to.be.false;
-  });
-});
 
 describe('validateValue', function(){
   it('accepts when input is in array', function(){

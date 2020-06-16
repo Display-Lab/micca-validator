@@ -94,16 +94,55 @@ describe('Marple static methods', function(){
     });
   });
 
-  describe('problemReport', function(){
+  describe('allRowProblems', function(){
     it('is empty for good data.', function(){
-      let result = Marple.problemReport(goodDf);
+      let result = Marple.allRowProblems(goodDf);
       expect(result).to.eql({});
     });
 
     it('has one key for each row of bad data', function(){
-      let result = Marple.problemReport(badDf);
+      let result = Marple.allRowProblems(badDf);
       let nkeys = Object.keys(result).length;
       expect(nkeys).to.eql(badDf.length);
+    });
+  });
+
+  describe('checkDate', function(){
+    it('accepts yyyy-MM-dd dates', function(){
+      let result = Marple.checkDate("2020-11-22");
+      expect(result).to.be.true;
+    });
+
+    it('rejects MM/dd/yyyy dates', function(){
+      let result = Marple.checkDate("11/22/2020");
+      expect(result).to.be.false;
+    });
+
+    it('rejects out of bounds dates', function(){
+      let result = Marple.checkDate("2020-22-22");
+      expect(result).to.be.false;
+    });
+  });
+
+  describe('checkDateOrUnknown', function(){
+    it('accepts unknown', function(){
+      let result = Marple.checkDateOrUnknown("unknown");
+      expect(result).to.be.true;
+    });
+
+    it('accepts yyyy-MM-dd dates', function(){
+      let result = Marple.checkDateOrUnknown("2020-11-22");
+      expect(result).to.be.true;
+    });
+
+    it('rejects MM/dd/yyyy dates', function(){
+      let result = Marple.checkDateOrUnknown("11/22/2020");
+      expect(result).to.be.false;
+    });
+
+    it('rejects out of bounds dates', function(){
+      let result = Marple.checkDateOrUnknown("2020-22-22");
+      expect(result).to.be.false;
     });
   });
 

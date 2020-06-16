@@ -1,6 +1,7 @@
 import {expect} from 'chai';
 import * as CONST from '../src/consts.js';
 import Utils from '../src/utils.js'
+import xlsxRaw from './fixtures/good_data.xlsx'
 
 // Helper function to remove a value from an array.
 function removeFromArray(arr,val){
@@ -8,6 +9,20 @@ function removeFromArray(arr,val){
   if (idx > -1) { arr.splice(idx, 1); }
   return(arr);
 }
+
+describe('parseToDf', function(){
+  //TODO Figure out how to test if all keys and values are lowercase
+  it.skip('converts entire contents to lower case', function(){
+    let csvData="Foo,Bar,Baz\n10,Yes,Unknown\n12,No,PPTL\n";
+    let result = Utils.parseToDf(csvData);
+  });
+
+  it('throws error on xlsx data', function(){
+    let binding = Utils.parseToDf.bind(this, xlsxRaw);
+    expect(binding).to.throw("Excel");
+  });
+});
+
 
 describe('diffCols', function(){
   it('returns empty when no differnces.', function(){

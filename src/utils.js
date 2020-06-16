@@ -1,3 +1,4 @@
+import {csvParse} from 'd3-dsv';
 import * as CONST from './consts.js';
 
 export default class Utils {
@@ -18,5 +19,14 @@ export default class Utils {
     let rightDiff = [...hdrs].filter(x => !cols.has(x));
     return(rightDiff);
   }
+
+  //Parse file data to data frame (array of rows)
+  static parseToDf(fileData){ 
+    if(fileData.charCodeAt(0) === 0x50 && fileData.charCodeAt(1) === 0x4B){
+      throw CONST.XLSX_ERROR;
+    }
+    return(csvParse(fileData.toLowerCase())); 
+  }
+
 }
 
