@@ -1,4 +1,4 @@
 import Marple from './marple.js';
-import Validate from './validate.js';
+import Validator from './validate.js';
 
-export default {Marple, Validate};
+export {Marple, Validator}

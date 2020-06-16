@@ -3,7 +3,7 @@ const path = require('path');
 var webpack = require("webpack");
 
 module.exports = {
-  entry: './src/validate_csv.js',
+  entry: './src/index.js',
   output: {
     filename: 'micca.js',
     path: path.resolve(__dirname, 'dist'),

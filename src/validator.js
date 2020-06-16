@@ -2,7 +2,7 @@ import Marple from './marple.js';
 import Utils from './utils.js';
 
 // Validate file data
-export default class Validate {
+export default class Validator {
   static validateFile(fileData) { 
     let problems = Marple.reportProblems(fileData);
     return(Utils.isEmpty(problems));
@@ -30,6 +30,6 @@ export default class Validate {
   }
 
   static validateDataFrame(df){
-    return(df.every(Validate.validateRow));
+    return(df.every(Validator.validateRow));
   }
 }
