@@ -109,61 +109,6 @@ describe('verifyHeader', function(){
   });
 });
 
-describe('diffCols', function(){
-  it('returns empty when no differnces.', function(){
-    let result = bdl.diffCols(CONST.EXPECT_HEADER,CONST.EXPECT_HEADER);
-    expect(result).to.be.empty;
-  });
-
-  it('points out bad name of column.', function(){
-    let wrongName = [...CONST.EXPECT_HEADER];
-    wrongName[1] = "badname";
-
-    let result = bdl.diffCols(wrongName,CONST.EXPECT_HEADER);
-    expect(result).to.have.lengthOf(1);
-    expect(result).to.include("badname");
-  });
-
-  it('points out name of extra column.', function(){
-    let hasExtra = [...CONST.EXPECT_HEADER];
-    hasExtra.push("extra");
-
-    let result = bdl.diffCols(hasExtra,CONST.EXPECT_HEADER);
-    expect(result).to.have.lengthOf(1);
-    expect(result).to.include("extra");
-  });
-
-  it('points out name of extra blank columns.', function(){
-    let extraBlankCols = [...CONST.EXPECT_HEADER];
-    extraBlankCols.push("");
-    extraBlankCols.push("");
-
-    let result = bdl.diffCols(extraBlankCols,CONST.EXPECT_HEADER);
-    expect(result).to.have.lengthOf(1);
-    expect(result).to.include("");
-  });
-});
-
-describe('diffCols', function(){
-  it('points out name of missing column.', function(){
-    let missingColName = [...CONST.EXPECT_HEADER];
-    removeFromArray(missingColName, CONST.EXPECT_HEADER[2]);
-
-    let result = bdl.diffHeader(missingColName,CONST.EXPECT_HEADER);
-    expect(result).to.have.lengthOf(1);
-    expect(result).to.include(CONST.EXPECT_HEADER[2]);
-  });
-
-  it('does not report extra column.', function(){
-    let hasExtra = [...CONST.EXPECT_HEADER];
-    hasExtra.push("extra");
-
-    let result = bdl.diffHeader(hasExtra,CONST.EXPECT_HEADER);
-    expect(result).to.be.empty;
-  });
-});
-
-
 describe('validateDate', function(){
   it('accepts yyyy-MM-dd dates', function(){
     let result = bdl.validateDate("2020-11-22");

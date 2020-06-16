@@ -21,24 +21,6 @@ export function verifyHeader(colnames){
   return( compareArrays(colnames, CONST.EXPECT_HEADER) );
 }
 
-// Find differences of column names: find extra colnames
-export function diffCols(colnames){
-  let cols = new Set(colnames);
-  let hdrs = new Set(CONST.EXPECT_HEADER);
-
-  let leftDiff = [...cols].filter(x => !hdrs.has(x));
-  return(leftDiff);
-}
-
-// Find differences of expected header: find missing colnames
-export function diffHeader(colnames){
-  let cols = new Set(colnames);
-  let hdrs = new Set(CONST.EXPECT_HEADER);
-
-  let rightDiff = [...hdrs].filter(x => !cols.has(x));
-  return(rightDiff);
-}
-
 //Check given value against good values
 export function validateValue(input, expected){ 
   return(expected.includes(input));
