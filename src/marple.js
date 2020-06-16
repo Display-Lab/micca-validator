@@ -13,6 +13,16 @@ export default class Marple {
     return(extraHdrs);
   }
 
+  static outOfLocHeaders(colnames){
+    let oOLCols = colnames.filter( (ele, i) => {
+      if(CONST.EXPECT_HEADER.indexOf(ele) > -1 &&
+         CONST.EXPECT_HEADER.indexOf(ele) !== i){
+        return(true);
+      }
+    });
+    return(oOLCols);
+  }
+
   static checkValue(input, expected){ 
     return(expected.includes(input));
   }
@@ -54,6 +64,7 @@ export default class Marple {
     return(colsInError);
   }
 
+
   static allRowProblems(df){
     let rowProblems = [];
     let report = {};
@@ -61,6 +72,27 @@ export default class Marple {
       rowProblems = Marple.sleuthRow(df[i]);
       if(rowProblems.length > 0){ report[i+1] = rowProblems; }
     }
+    return(report);
+  }
+
+  static reportProblems(rawData){
+    let df, report = {};
+    try{ 
+      df = Utils.parseToDf(rawData); 
+    } catch(e) { 
+      report["parsing"] = e; 
+      return(report);
+    }
+
+    let extraHdr = Marple.extraHeaders(df.columns);
+    if(extraHdr.length > 0){ report["extraHeaders"] = extraHdr;}
+
+    let missHdr = Marple.missingHeaders(df.columns);
+    if(missHdr.length > 0){ report["missingHeaders"] = missHdr;}
+
+    let rowPblms = Marple.allRowProblems(df);
+    if(!Utils.isEmpty(rowPblms)){ report["rowProblems"] = rowPblms; }
+
     return(report);
   }
 }

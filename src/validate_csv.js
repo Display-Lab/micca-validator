@@ -1,26 +1,20 @@
 import Marple from './marple.js';
 import Utils from './utils.js';
-import * as CONST from './consts.js';
-
-// convenience method to compare array members.
-const compareArrays = (a, b) => a.map(JSON.stringify).join() === b.map(JSON.stringify).join();
 
 // Validate file data
 export function validateFile(fileData) { 
-  let df;
-  try{
-    df = Utils.parseToDf(fileData); 
-  }catch(e){
-    return(false);
-  }
-
-  console.log(df);
-  return(validateDataFrame(df));
+  let problems = Marple.reportProblems(fileData);
+  return(Utils.isEmpty(problems));
 }
 
-// Compare colnames to expected columns
 export function verifyHeader(colnames){
-  return( compareArrays(colnames, CONST.EXPECT_HEADER) );
+  let oord = Marple.outOfLocHeaders(colnames),
+      miss = Marple.missingHeaders(colnames),
+      extr = Marple.extraHeaders(colnames);
+
+  return(oord.length < 1 && 
+         miss.length < 1 && 
+         extr.length < 1); 
 }
 
 //Check given value against good values

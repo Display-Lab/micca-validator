@@ -28,5 +28,13 @@ export default class Utils {
     return(csvParse(fileData.toLowerCase())); 
   }
 
+  static isEmpty(obj) {
+    for(var key in obj) {
+      if(obj.hasOwnProperty(key))
+        return false;
+    }
+    return true;
+  }
+
 }
 

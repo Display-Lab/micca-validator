@@ -52,6 +52,27 @@ describe('Marple static methods', function(){
     });
   });
 
+  describe('outOfLocHeaders', function(){
+    it('returns empty array when extra headers tacked on.', function(){
+      let hasExtra = [...CONST.EXPECT_HEADER];
+      hasExtra.push("extra");
+
+      let result = Marple.outOfLocHeaders(hasExtra);
+      expect(result).to.eql([]);
+    });
+
+    it('returns empty array when all headers are present in order.', function(){
+      let result = Marple.outOfLocHeaders(CONST.EXPECT_HEADER);
+      expect(result).to.eql([]);
+    });
+
+    it('indicates all colnames if all are out of order.', function(){
+      let misordered = [...CONST.EXPECT_HEADER.slice(6), ...CONST.EXPECT_HEADER.slice(0,6)];
+      let result = Marple.outOfLocHeaders(misordered);
+      expect(result).to.eql(misordered);
+    });
+  });
+
   describe('sleuthRow', function(){
     it('returns empty array when data is good', function(){
       let result = Marple.sleuthRow(goodDf[1]);
@@ -145,6 +166,18 @@ describe('Marple static methods', function(){
       expect(result).to.be.false;
     });
   });
+  
+  describe('reportProblems', function(){
+    it('reports nothing for good data', function(){
+      let result = Marple.reportProblems(goodCsvRaw);
+      expect(result).to.eql({});
+    });
 
+    it('has one key for each row of bad data in rows section of report', function(){
+      let result = Marple.reportProblems(badCsvRaw);
+      let nkeys = Object.keys(result["rowProblems"]).length;
+      expect(nkeys).to.eql(badDf.length);
+    });
+  });
 });
 
