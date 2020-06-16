@@ -90,6 +90,9 @@ export default class Marple {
     let missHdr = Marple.missingHeaders(df.columns);
     if(missHdr.length > 0){ report["missingHeaders"] = missHdr;}
 
+    let oordHdr = Marple.outOfLocHeaders(df.columns);
+    if(missHdr.length > 0){ report["wrongLocationHeaders"] = oordHdr;}
+
     let rowPblms = Marple.allRowProblems(df);
     if(!Utils.isEmpty(rowPblms)){ report["rowProblems"] = rowPblms; }
 
