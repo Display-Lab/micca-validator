@@ -84,14 +84,16 @@ export default class Marple {
       return(report);
     }
 
-    let extraHdr = Marple.extraHeaders(df.columns);
-    if(extraHdr.length > 0){ report["extraHeaders"] = extraHdr;}
-
+    let extrHdr = Marple.extraHeaders(df.columns);
     let missHdr = Marple.missingHeaders(df.columns);
-    if(missHdr.length > 0){ report["missingHeaders"] = missHdr;}
-
     let oordHdr = Marple.outOfLocHeaders(df.columns);
-    if(missHdr.length > 0){ report["wrongLocationHeaders"] = oordHdr;}
+
+    //initialize headerProblems
+    if(extrHdr.length + missHdr.length + missHdr.length > 0){ report["headerProblems"]=null; }
+
+    if(extrHdr.length > 0){ report["headerProblems"]["extraHeaders"] = extrHdr;}
+    if(missHdr.length > 0){ report["headerProblems"]["missingHeaders"] = missHdr;}
+    if(missHdr.length > 0){ report["headerProblems"]["wrongLocationHeaders"] = oordHdr;}
 
     let rowPblms = Marple.allRowProblems(df);
     if(!Utils.isEmpty(rowPblms)){ report["rowProblems"] = rowPblms; }
