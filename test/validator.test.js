@@ -1,4 +1,3 @@
-//var assert = require('assert');
 import {expect} from 'chai';
 import {csvParse} from 'd3-dsv';
 import * as CONST from '../src/consts.js';
