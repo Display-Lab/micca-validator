@@ -89,11 +89,11 @@ export default class Marple {
     let oordHdr = Marple.outOfLocHeaders(df.columns);
 
     //initialize headerProblems
-    if(extrHdr.length + missHdr.length + missHdr.length > 0){ report["headerProblems"]=null; }
+    if(extrHdr.length + missHdr.length + missHdr.length > 0){ report["headerProblems"]={}; }
 
-    if(extrHdr.length > 0){ report["headerProblems"]["extraHeaders"] = extrHdr;}
-    if(missHdr.length > 0){ report["headerProblems"]["missingHeaders"] = missHdr;}
-    if(missHdr.length > 0){ report["headerProblems"]["wrongLocationHeaders"] = oordHdr;}
+    if(extrHdr.length > 0){ report["headerProblems"]["Extra Headers"] = extrHdr;}
+    if(missHdr.length > 0){ report["headerProblems"]["Missing Headers"] = missHdr;}
+    if(missHdr.length > 0){ report["headerProblems"]["Misplaced Headers"] = oordHdr;}
 
     let rowPblms = Marple.allRowProblems(df);
     if(!Utils.isEmpty(rowPblms)){ report["rowProblems"] = rowPblms; }
