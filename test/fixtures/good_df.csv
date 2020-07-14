@@ -1,0 +1,12 @@
+patient_mrn,delivery_date,counseling,contra_choice,imm_method,contra_prov,larc_prov,payer,choice_date,peripartum_care
+10,2020-01-01,true,unknown,other,0-3 days,not provisioned,medicaid,2019-12-01,false
+11,2020-01-02,true,other,other,4-60 days,not provisioned,medicaid,2019-11-01,false
+12,2020-01-03,true,pptl,immediate pp nexplanon,not provisioned,0-3 days,medicaid,2019-11-01,false
+13,2020-01-03,false,unknown,none,not provisioned,not provisioned,medicaid,unknown,false
+14,2020-01-03,false,unknown,pptl,0-3 days,not provisioned,non_medicaid,unknown,false
+15,2020-01-03,true,other,none,0-3 days,not provisioned,non_medicaid,2019-07-01,false
+16,2020-01-04,true,other,none,not provisioned,not provisioned,non_medicaid,2019-12-01,false
+17,2020-01-04,true,unknown,none,not provisioned,not provisioned,non_medicaid,2019-12-01,false
+18,2020-01-04,false,unknown,other,0-3 days,not provisioned,medicaid,unknown,false
+19,2020-01-05,true,other,none,not provisioned,not provisioned,non_medicaid,2019-10-01,false
+20,2020-01-05,false,unknown,none,not provisioned,not provisioned,medicaid,unknown,false
