@@ -1,7 +1,7 @@
 import {csvParse} from 'd3-dsv';
-import * as d3c from 'd3-collection'
-import * as d3a from 'd3-array'
-import * as CONST from './consts.js';
+import * as d3c from 'd3-collection';
+import * as d3a from 'd3-array';
+import moment from 'moment';
 import clone from 'lodash';
 import Utils from './utils.js';
 
@@ -20,6 +20,9 @@ export default class Aeta {
       d.counseling      = d.counseling === 'yes' ? true : false;
       d.payer           = d.payer === 'medicaid' ? d.payer : 'non_medicaid';
       d.peripartum_care = d.peripartum_care === 'yes' ? true : false;
+      d.report_month = moment.utc(d.delivery_date)
+                             .startOf('month')
+                             .format('YYYY-MM-DD');
       return(d)
     });
 
@@ -29,7 +32,59 @@ export default class Aeta {
   }
 
   static calcComponents(df){
+    let groupFuns = [d => d.report_month, d => d.payer];
 
+    return(new Array());
+  }
+
+  static calcGroupComponents(df){
+    let groupFuns = [d => d.report_month, d => d.payer];
+
+    let components = [
+      d3a.rollup(df, v => {return new Map().set("C1", v.length)}, ...groupFuns),
+      d3a.rollup(df.filter(d => d.contra_prov === '0-3 days'), 
+                 v => {return new Map().set("C2", v.length)}, ...groupFuns),
+      d3a.rollup(df.filter(d => d.contra_prov === '4-60 days'), 
+                 v => {return new Map().set("C3", v.length)}, ...groupFuns),
+      d3a.rollup(df.filter(d => d.larc_prov === '0-3 days'), 
+                 v => {return new Map().set("C4", v.length)}, ...groupFuns),
+      d3a.rollup(df.filter(d => {return(d.larc_prov === '4-60 days pp visit' || d.larc_prov === '4-60 days not pp visit')}),
+                 v => {return new Map().set("C5", v.length)}, ...groupFuns),
+      //component 6 deprecated
+      d3a.rollup(df.filter(d => d.counseling), 
+                 v => {return new Map().set("C7", v.length)}, ...groupFuns),
+      d3a.rollup(df.filter(d => d.contra_choice !== 'unknown'), 
+                 v => {return new Map().set("C8", v.length)}, ...groupFuns),
+      d3a.rollup(df.filter(d => d.contra_choice === "immediate pp iud" || d.contra_choice === "immediate pp nexplanon"),
+                 v => {return new Map().set("C9", v.length)}, ...groupFuns),
+      //component 10 deprecated
+      d3a.rollup(df.filter(d => d.contra_choice !== "unknown" && d.contra_choice === d.imm_method && d.contra_prov === "0-3 days"),
+                 v => {return new Map().set("C11", v.length)}, ...groupFuns),
+      d3a.rollup(df.filter(d => d.larc_prov === "4-60 days pp visit" || d.larc_prov === "4-60 days not pp visit"),
+                 v => {return new Map().set("C12", v.length)}, ...groupFuns),
+      d3a.rollup(df.filter(d => d.contra_choice === "immediate pp iud"), 
+                 v => {return new Map().set("C13", v.length)}, ...groupFuns),
+      d3a.rollup(df.filter(d => d.contra_choice === "immediate pp nexplanon"), 
+                 v => {return new Map().set("C14", v.length)}, ...groupFuns),
+      d3a.rollup(df.filter(d => d.contra_choice === "pptl"), 
+                 v => {return new Map().set("C15", v.length)}, ...groupFuns),
+      d3a.rollup(df.filter(d => d.contra_choice === "other"), 
+                 v => {return new Map().set("C16", v.length)}, ...groupFuns),
+      d3a.rollup(df.filter(d => d.contra_choice === "immediate pp iud" && d.imm_method === "immediate pp iud"),
+                 v => {return new Map().set("C17", v.length)}, ...groupFuns),
+      d3a.rollup(df.filter(d => d.contra_choice === "immediate pp nexplanon" && d.imm_method === "immediate pp nexplanon"),
+                 v => {return new Map().set("C18", v.length)}, ...groupFuns),
+      d3a.rollup(df.filter(d => d.contra_choice === "pptl" && d.imm_method === "pptl"),
+                 v => {return new Map().set("C19", v.length)}, ...groupFuns),
+      d3a.rollup(df.filter(d => d.contra_choice === "other" && d.imm_method === "other"),
+                 v => {return new Map().set("C20", v.length)}, ...groupFuns),
+      d3a.rollup(df.filter(d => d.imm_method === "immediate pp iud"), 
+                 v => {return new Map().set("C21", v.length)}, ...groupFuns),
+      d3a.rollup(df.filter(d => d.imm_method === "immediate pp nexplanon"), 
+                 v => {return new Map().set("C22", v.length)}, ...groupFuns)
+    ];
+    
+    return(components);
   }
 
 }
