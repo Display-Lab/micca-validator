@@ -22,7 +22,7 @@ before("Setup data frames.", function(){
   badDf = csvParse(badCsvRaw.toLowerCase()); 
 })
 
-describe('Marple static methods', function(){
+describe('Marple', function(){
   describe('missingHeaders', function(){
     it('returns empty array when all headers are present', function(){
       let result = Marple.missingHeaders(CONST.EXPECT_HEADER);
