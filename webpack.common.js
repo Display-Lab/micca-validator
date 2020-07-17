@@ -1,6 +1,7 @@
 // Can't use ES6 imports without some work.
 const path = require('path');
-var webpack = require("webpack");
+const webpack = require("webpack");
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin'); 
 
 module.exports = {
   entry: './src/index.js',
@@ -17,6 +18,8 @@ module.exports = {
         "window.jQuery": "jquery",
         jquery: "jquery",
         d3: 'd3'
-    })
+    }),
+    // Strip all locales except "en" from moment package.
+    new MomentLocalesPlugin()
   ]
 };
