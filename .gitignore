@@ -37,5 +37,5 @@ pids
 *.pid.lock
 
 # Scratch files
-scratch.js
+scratch*.js
 ref/*

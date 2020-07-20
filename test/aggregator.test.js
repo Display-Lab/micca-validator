@@ -1,11 +1,14 @@
 import {expect} from 'chai';
 import {csvParse} from 'd3-dsv';
 import moment from 'moment';
-import Aeta from '../src/aggregator.js'
+import md5 from 'js-md5'
 import * as fs from 'fs';
-import goodCsvRaw from './fixtures/good_data.csv'
-import goodDfRaw from './fixtures/good_df.csv'
-import goodMaptgRaw from './fixtures/good_maptg.csv'
+import refInputRaw from './fixtures/good_data.csv';
+import refMeasuresRaw from './fixtures/good_measures.csv';
+import {groupedComponents, wideComponents, longComponents} from './fixtures/good_components.js';
+import {mungedDf} from './fixtures/good_df.js';
+import Aeta from '../src/aggregator.js'
+
 
 // Helper function to read a file from disk
 function readFile(path){
@@ -18,10 +21,10 @@ function readFile(path){
   }
 }
 
-var goodParsed, goodDf;
+var goodParsed, refMeasures;
 before("Setup data frames.", function(){
-  goodParsed = csvParse(goodCsvRaw.toLowerCase()); 
-  goodDf = csvParse(goodDfRaw); 
+  goodParsed = csvParse(refInputRaw.toLowerCase()); 
+  refMeasures = csvParse(refMeasuresRaw);
 })
 
 //helper function to apply to each row during testing
@@ -36,16 +39,21 @@ function checkReportMonth(report_month){
 }
 
 describe('Aggregator', function(){
-  // Testing the data aggregator.
+  let result;
+  before(function(){
+    result = Aeta.digestFile(refInputRaw);
+  });
+
   describe('digestFile()', function(){
     it('accepts raw good data', function(){
-      let result = Aeta.digestFile(goodCsvRaw);
-      expect(result).to.be.an('object');
+      expect(result).to.be.a('string');
     });
 
-    it.skip('emits maptg data', function(){
-      let result = Aeta.digestFile(goodCsvRaw);
-      expect(result).to.be.an('object');
+    it('emits measure data corresponding to R output', function(){
+      let md5result = md5(result);
+      let md5ref = md5(refMeasuresRaw);
+
+      expect(md5result).to.equal(md5ref);
     });
   });
 
@@ -73,10 +81,6 @@ describe('Aggregator', function(){
       ).to.be.true;
     });
 
-    it('Preserves columns', function(){
-      expect(result.columns).to.eql(goodParsed.columns);
-    });
-
     describe('Calculated report_month', function(){
       it('Represented as string', function(){
         expect(result.every( (val,i,arr) => {return(typeof(val.report_month) === "string") })
@@ -92,16 +96,37 @@ describe('Aggregator', function(){
 
   describe('calcComponents()', function(){
     let result;
-    // Depends on mutate values: fix this at some point.
     before(function(){
-      let mungedDf = Aeta.mutateValues(goodDf)
       result = Aeta.calcComponents(mungedDf);
     });
 
-    it('Returns an array', function(){
+    it('emits array element per compoent', function(){
       expect(result).to.be.an('array');
+      expect(result.length).to.equal(20);
     });
   });
 
+  describe('ungroupComonents()', function(){
+    it('emits row per component, report_month, and payer', function(){
+      let result = Aeta.ungroupComponents(groupedComponents);
+      expect(result).to.be.an('array');
+      expect(result.length).to.equal(120);
+    });
+  });
 
+  describe('widenComponents()', function(){
+    let result;
+    before(function(){
+      result = Aeta.widenComponents(longComponents);
+    });
+
+    it('emit row report_month, payer', function(){
+      expect(result).to.be.an('array');
+      expect(result.length).to.equal(6);
+    });
+
+    it('emits same data as R script', function(){
+      expect(result).to.eql(wideComponents);
+    });
+  });
 });
