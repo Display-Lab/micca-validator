@@ -9,6 +9,7 @@
     "css-loader": "^3.6.0",
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.3.0",
+    "js-md5": "^0.7.3",
     "mocha": "^8.0.1",
     "mochapack": "^2.0.3",
     "moment-locales-webpack-plugin": "^1.2.0",
