@@ -1,4 +1,4 @@
-patient_mrn,delivery_date,counseled,contra_choice,contra_prov,larc_prov,insurance,choice_date,peripartum_care,imm_method
+patient_mrn,delivery_date,counseled,contraception_choice,contraception_provision,larc_provision,insurance,choice_date,peripartum_care,immediate_method
 10,2020-01-01,yes,unknown,0-3 days,not provisioned,medicaid,2019-12-01,unknown,other
 11,2020-01-02,yes,other,4-60 days,not provisioned,medicaid,2019-11-01,unknown,other
 12,2020-01-03,yes,pptl,not provisioned,0-3 days,medicaid,2019-11-01,unknown,immediate pp nexplanon
