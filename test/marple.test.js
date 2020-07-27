@@ -178,6 +178,16 @@ describe('Marple', function(){
       let nkeys = Object.keys(result["rowProblems"]).length;
       expect(nkeys).to.eql(badDf.length);
     });
+
+    it('keys two ahead of data row index to account for headers being row 1', function(){
+      let result = Marple.reportProblems(badCsvRaw);
+      let keys = Object.keys(result["rowProblems"]);
+      let lastKey = keys.pop();
+      expect(keys[0]).to.eql('2');
+      expect(lastKey).to.eql((badDf.length+1).toString());
+    });
+
+
   });
 });
 

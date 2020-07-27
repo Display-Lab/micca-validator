@@ -70,7 +70,7 @@ export default class Marple {
     let report = {};
     for(let i=0; i<df.length; i++){
       rowProblems = Marple.sleuthRow(df[i]);
-      if(rowProblems.length > 0){ report[i+1] = rowProblems; }
+      if(rowProblems.length > 0){ report[i+2] = rowProblems; }
     }
     return(report);
   }
