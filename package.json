@@ -1,6 +1,6 @@
 {
   "name": "@display-lab/micca-validator",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "MICCA input validation and aggregation library.",
   "author": "Colin A. Gross",
   "license": "Apache-2.0",

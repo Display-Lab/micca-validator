@@ -33,13 +33,6 @@ function removeFromArray(arr,val){
 
 
 describe('Validator', function(){
-  // Checking the testing framework behaves as expected.
-  describe('testing framework', function(){
-    it('makes packed data is available', function(){
-      expect(goodCsvRaw.length).to.equal(2965);
-    });
-  });
-
   // Testing the validator.
   describe('validateFile()', function(){
     it('accepts raw good data', function(){

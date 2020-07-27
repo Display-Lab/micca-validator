@@ -35,25 +35,25 @@ export default class Aeta {
     return(mdf);
   }
 
-  static filtC2(d){return(d.contra_prov === '0-3 days')}
-  static filtC3(d){return(d.contra_prov === '4-60 days')}
-  static filtC4(d){return(d.larc_prov === '0-3 days')}
-  static filtC5(d){return(d.larc_prov === '4-60 days pp visit' || d.larc_prov === '4-60 days not pp visit')}
+  static filtC2(d){return(d.contraception_provision === '0-3 days')}
+  static filtC3(d){return(d.contraception_provision === '4-60 days')}
+  static filtC4(d){return(d.larc_provision === '0-3 days')}
+  static filtC5(d){return(d.larc_provision === '4-60 days pp visit' || d.larc_provision === '4-60 days not pp visit')}
   static filtC7(d){return(d.counseling)}
-  static filtC8(d){return(d.contra_choice !== 'unknown')}
-  static filtC9(d){return(d.contra_choice === "immediate pp iud" || d.contra_choice === "immediate pp nexplanon")}
-  static filtC11(d){return(d.contra_choice !== "unknown" && d.contra_choice === d.imm_method && d.contra_prov === "0-3 days")}
-  static filtC12(d){return(d.larc_prov === "4-60 days pp visit" || d.larc_prov === "4-60 days not pp visit")}
-  static filtC13(d){return(d.contra_choice === "immediate pp iud")}
-  static filtC14(d){return(d.contra_choice === "immediate pp nexplanon")}
-  static filtC15(d){return(d.contra_choice === "pptl")}
-  static filtC16(d){return(d.contra_choice === "other")}
-  static filtC17(d){return(d.contra_choice === "immediate pp iud" && d.imm_method === "immediate pp iud")}
-  static filtC18(d){return(d.contra_choice === "immediate pp nexplanon" && d.imm_method === "immediate pp nexplanon")}
-  static filtC19(d){return(d.contra_choice === "pptl" && d.imm_method === "pptl")}
-  static filtC20(d){return(d.contra_choice === "other" && d.imm_method === "other")}
-  static filtC21(d){return(d.imm_method === "immediate pp iud")}
-  static filtC22(d){return(d.imm_method === "immediate pp nexplanon")}
+  static filtC8(d){return(d.contraception_choice !== 'unknown')}
+  static filtC9(d){return(d.contraception_choice === "immediate pp iud" || d.contraception_choice === "immediate pp nexplanon")}
+  static filtC11(d){return(d.contraception_choice !== "unknown" && d.contraception_choice === d.immediate_method && d.contraception_provision === "0-3 days")}
+  static filtC12(d){return(d.larc_provision === "4-60 days pp visit" || d.larc_provision === "4-60 days not pp visit")}
+  static filtC13(d){return(d.contraception_choice === "immediate pp iud")}
+  static filtC14(d){return(d.contraception_choice === "immediate pp nexplanon")}
+  static filtC15(d){return(d.contraception_choice === "pptl")}
+  static filtC16(d){return(d.contraception_choice === "other")}
+  static filtC17(d){return(d.contraception_choice === "immediate pp iud" && d.immediate_method === "immediate pp iud")}
+  static filtC18(d){return(d.contraception_choice === "immediate pp nexplanon" && d.immediate_method === "immediate pp nexplanon")}
+  static filtC19(d){return(d.contraception_choice === "pptl" && d.immediate_method === "pptl")}
+  static filtC20(d){return(d.contraception_choice === "other" && d.immediate_method === "other")}
+  static filtC21(d){return(d.immediate_method === "immediate pp iud")}
+  static filtC22(d){return(d.immediate_method === "immediate pp nexplanon")}
 
 
   static calcComponents(df){

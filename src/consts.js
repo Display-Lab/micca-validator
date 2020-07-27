@@ -1,14 +1,14 @@
 // Allowed column names in order
-export const EXPECT_HEADER=["patient_mrn","delivery_date","counseling","contra_choice","imm_method",
-                             "contra_prov","larc_prov","payer","choice_date","peripartum_care"]
+export const EXPECT_HEADER=["patient_mrn","delivery_date","counseling","contraception_choice","immediate_method",
+                             "contraception_provision","larc_provision","payer","choice_date","peripartum_care"]
 
 // Allowed values for columns
 export const VALID_VALS = {
   counseling:      ["yes","no","unknown"],
-  contra_choice:   ["immediate pp iud", "immediate pp nexplanon", "pptl", "other", "none", "unknown"],
-  imm_method:      ["immediate pp iud", "immediate pp nexplanon", "pptl", "other", "none", "unknown"],
-  contra_prov:     ["0-3 days", "4-60 days", "not provisioned", "unknown"],
-  larc_prov:       ["0-3 days", "4-60 days pp visit","4-60 days not pp visit", "not provisioned", "unknown"],
+  contraception_choice:   ["immediate pp iud", "immediate pp nexplanon", "pptl", "other", "none", "unknown"],
+  immediate_method:      ["immediate pp iud", "immediate pp nexplanon", "pptl", "other", "none", "unknown"],
+  contraception_provision:     ["0-3 days", "4-60 days", "not provisioned", "unknown"],
+  larc_provision:       ["0-3 days", "4-60 days pp visit","4-60 days not pp visit", "not provisioned", "unknown"],
   payer:           ["medicaid", "molina", "private", "other", "unknown"],
   peripartum_care: ["yes","no","unknown"]
 };
