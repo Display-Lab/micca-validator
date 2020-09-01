@@ -3,6 +3,7 @@ import {expect} from 'chai';
 import * as CONST from '../src/consts.js';
 import Marple from '../src/marple.js'
 import goodCsvRaw from './fixtures/good_data.csv'
+import trailingNewlineRaw from './fixtures/trailing_newline.csv'
 import badCsvRaw from './fixtures/bad_data.csv'
 
 // Helper function to read a file from disk
@@ -16,10 +17,11 @@ function readFile(path){
   }
 }
 
-var goodDf, badDf;
+var goodDf, badDf, trailingDf;
 before("Setup data frames.", function(){
   goodDf = csvParse(goodCsvRaw.toLowerCase()); 
   badDf = csvParse(badCsvRaw.toLowerCase()); 
+  trailingDf = csvParse(trailingNewlineRaw.toLowerCase()); 
 })
 
 describe('Marple', function(){
@@ -125,6 +127,11 @@ describe('Marple', function(){
       let result = Marple.allRowProblems(badDf);
       let nkeys = Object.keys(result).length;
       expect(nkeys).to.eql(badDf.length);
+    });
+
+    it('indifferent to blank rows', function(){
+      let result = Marple.allRowProblems(trailingDf);
+      expect(result).to.eql({});
     });
   });
 
